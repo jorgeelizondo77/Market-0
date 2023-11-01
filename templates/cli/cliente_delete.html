@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block css %}
+<style>
+    .pb {
+        padding-bottom: 10px !important;
+      }
+</style>  
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="card card-default">
+        <div class="card-header">
+          <h3 class="card-title">Edición de Registro de Cliente</h3>
+        </div>
+    </div>
+
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.nombre.label }}
+                        {{ form.nombre }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.rfc.label }}
+                        {{ form.rfc }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.regimen.label}}
+                        {{ form.regimen }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.calle.label }}
+                        {{ form.calle }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.numero_externo.label }}
+                        {{ form.numero_externo }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.numero_interno.label}}
+                        {{ form.numero_interno }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.pais.label }}
+                        {{ form.pais }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.entidad.label }}
+                        {{ form.entidad }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.municipio.label}}
+                        {{ form.municipio }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.colonia.label }}
+                        {{ form.colonia }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.cp.label }}
+                        {{ form.cp }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.zona.label}}
+                        {{ form.zona }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.contacto.label }}
+                        {{ form.contacto }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.correo.label }}
+                        {{ form.correo }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.t_celular.label}}
+                        {{ form.t_celular }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.t_oficina.label }}
+                        {{ form.t_oficina }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.t_casa.label }}
+                        {{ form.t_casa }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.cuenta_contable.label}}
+                        {{ form.cuenta_contable }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.plazo.label }}
+                        {{ form.plazo }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                    <div class="form-group-">
+                        {{ form.comentario.label }}
+                        {{ form.comentario }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4 pb">
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary enabled">Eliminar</button>
+            <a style="margin-bottom: 0px;" href="{% url 'cli:cliente_list' %}" class="btn btn-info enabled">Regresar</a>
+        </div>
+    </div>
+
+</form>
+{% endblock content %}

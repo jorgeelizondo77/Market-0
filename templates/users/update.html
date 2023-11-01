@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row" style="justify-content: center; align-items: center;">
+
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="card card-info">
+
+        <div class="card-header">
+          <h3 class="card-title">Cambiar contraseña</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="id_password1">Contraseña actual</label>
+                    <input type="password" class="form-control" name="password1" id="id_password1">
+                </div>
+                <div class="form-group">
+                    <label for="id_password2">Contraseña nueva</label>
+                    <input type="password" class="form-control" name="password2" id="id_password2">
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Guardar</button>
+            </div>
+
+        </form>
+      </div>
+      <!-- /.card -->
+
+    </div>
+
+</div>
+
+{% endblock content %}

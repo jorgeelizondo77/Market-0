@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row" style="justify-content: center; align-items: center;">
+
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="card card-secondary">
+
+        <div class="card-header">
+          <h3 class="card-title">Eliminar registro de Municipio</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="card-body">
+                {{ form.as_table }}
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-secondary">Eliminar</button>
+            </div>
+
+        </form>
+      </div>
+      <!-- /.card -->
+
+    </div>
+
+</div>
+
+{% endblock content %}

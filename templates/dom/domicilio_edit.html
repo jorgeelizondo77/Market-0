@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row" style="justify-content: center; align-items: center;">
+
+    <!-- left column -->
+    <div class="col-md-18">
+      <!-- general form elements -->
+      <div class="card card-info">
+
+        <div class="card-header">
+          <h3 class="card-title">Edición de Domicilio</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="id_nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="id_nombre" value="{{ domicilio.nombre }}">
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                      <div class="form-group">
+                          {{ form.calle.label }}
+                          {{ form.calle }}
+                      </div>
+                  </div>
+                  <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                      <div class="form-group">
+                          {{ form.numero_externo.label }}
+                          {{ form.numero_externo }}
+                      </div>
+                  </div>
+                  <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                      <div class="form-group">
+                          {{ form.numero_interno.label}}
+                          {{ form.numero_interno }}
+                      </div>
+                  </div>
+                  <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.cp.label}}
+                        {{ form.cp }}
+                    </div>
+                </div>
+              </div>
+      
+              
+              <div class="row">
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.pais.label }}
+                        {{ form.pais }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.entidad.label }}
+                        {{ form.entidad }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.municipio.label}}
+                        {{ form.municipio }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                  <div class="form-group">
+                      {{ form.colonia.label}}
+                      {{ form.colonia }}
+                  </div>
+              </div>
+            </div>
+
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Guardar</button>
+            </div>
+
+        </form>
+      </div>
+      <!-- /.card -->
+
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    let pai = document.getElementById("id_pais")
+    let ent = document.getElementById("id_entidad")
+    let mun = document.getElementById("id_municipio")
+
+    pai.addEventListener("change", getPaisId) 
+    ent.addEventListener("change", getEntidadId) 
+
+    function getPaisId(e)
+    {
+        let pais_id = e.target.value
+
+        const data = { id: pais_id };
+        let url = "{% url 'dom:get_entidades' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            ent.innerHTML = '<option value="" selected>------</option>'
+            for(let i = 0; i < data.length; i++){
+                ent.innerHTML +=  `<option value="${data[i]["id"]}">${data[i]["nombre"]}</option>`
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    }
+
+    function getEntidadId(e)
+    {
+        let entidad_id = e.target.value
+
+        const data = { id: entidad_id };
+        let url = "{% url 'dom:get_municipios' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            mun.innerHTML = '<option value="" selected>------</option>'
+            for(let i = 0; i < data.length; i++){
+                mun.innerHTML +=  `<option value="${data[i]["id"]}">${data[i]["nombre"]}</option>`
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    }
+
+    function validachek() {
+        cnt=0;
+        $('input[type=checkbox]').each(function () {
+            if(this.checked){cnt++;}
+        });
+
+        if(cnt==0) {alert('Favor de indicar una categoría')}
+    }
+
+    let select = document.getElementsByTagName("select")
+    for(let i = 0; i < select.length; i++) {
+        select[i].classList.add("form-control")
+    }
+
+</script>
+{% endblock %}

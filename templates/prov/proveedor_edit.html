@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+
+{% block css %}
+<style>
+    .pb {
+        padding-bottom: 3px !important;
+      }
+
+      label:not(.form-check-label):not(.custom-file-label) {font-weight: 500;}
+</style>  
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="card card-default">
+        <div class="card-header">
+          <h3 class="card-title">Edición de Proveedor</h3>
+        </div>
+    </div>
+
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6 pb">
+                    <div class="form-group">
+                        {{ form.nombre.label }}
+                        {{ form.nombre }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.rfc.label }}
+                        {{ form.rfc }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.regimen.label}}
+                        {{ form.regimen }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                  <div class="form-group">
+                      {{ form.contacto_embarque.label }}
+                      {{ form.contacto_embarque }}
+                  </div>
+              </div>
+              <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                  <div class="form-group">
+                      {{ form.correo.label }}
+                      {{ form.correo }}
+                  </div>
+              </div>
+              <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                  <div class="form-group">
+                      {{ form.t_celular.label}}
+                      {{ form.t_celular }}
+                  </div>
+              </div>
+              <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                <div class="form-group">
+                    {{ form.t_oficina.label}}
+                    {{ form.t_oficina }}
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                <div class="form-group">
+                    {{ form.calle.label }}
+                    {{ form.calle }}
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                <div class="form-group">
+                    {{ form.numero_externo.label }}
+                    {{ form.numero_externo }}
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                <div class="form-group">
+                    {{ form.numero_interno.label}}
+                    {{ form.numero_interno }}
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-3 pb">
+              <div class="form-group">
+                  {{ form.cp.label}}
+                  {{ form.cp }}
+              </div>
+          </div>
+        </div>
+
+        
+        <div class="row">
+          <div class="col-sm-6 col-md-3 col-lg-3 pb">
+              <div class="form-group">
+                  {{ form.pais.label }}
+                  {{ form.pais }}
+              </div>
+          </div>
+          <div class="col-sm-4 col-md-3 col-lg-3 pb">
+              <div class="form-group">
+                  {{ form.entidad.label }}
+                  {{ form.entidad }}
+              </div>
+          </div>
+          <div class="col-sm-4 col-md-3 col-lg-3 pb">
+              <div class="form-group">
+                  {{ form.municipio.label}}
+                  {{ form.municipio }}
+              </div>
+          </div>
+          <div class="col-sm-4 col-md-3 col-lg-3 pb">
+            <div class="form-group">
+                {{ form.colonia.label}}
+                {{ form.colonia }}
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 col-md-3 col-lg-3 pb">
+            <div class="form-group">
+                {{ form.zona.label }}
+                {{ form.zona }}
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 pb">
+            <div class="form-group">
+              
+                <div class="pb">Categorías</div>
+                {{ form.categorias }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-3 col-lg-3 pb">
+          <div class="form-group">
+              {{ form.contacto_venta.label }}
+              {{ form.contacto_venta }}
+          </div>
+      </div>
+      <div class="col-sm-4 col-md-3 col-lg-3 pb">
+          <div class="form-group">
+              {{ form.correo_venta.label }}
+              {{ form.correo_venta }}
+          </div>
+      </div>
+      <div class="col-sm-4 col-md-3 col-lg-3 pb">
+          <div class="form-group">
+              {{ form.t_celular_venta.label}}
+              {{ form.t_celular_venta }}
+          </div>
+      </div>
+      <div class="col-sm-4 col-md-3 col-lg-3 pb">
+        <div class="form-group">
+            {{ form.t_celular_venta.label}}
+            {{ form.t_celular_venta }}
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-3 col-lg-3 pb">
+        <div class="form-group">
+            {{ form.forma_pago.label }}
+            {{ form.forma_pago }}
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-3 pb">
+        <div class="form-group">
+            {{ form.plazo.label }}
+            {{ form.plazo }}
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-3 pb">
+        <div class="form-group">
+            {{ form.descuento.label}}
+            {{ form.descuento }}
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-3 pb">
+      <div class="form-group">
+          {{ form.limite_credito.label}}
+          {{ form.limite_credito }}
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 col-md-3 col-lg-3 pb">
+      <div class="form-group">
+          {{ form.banco.label }}
+          {{ form.banco }}
+      </div>
+  </div>
+  <div class="col-sm-4 col-md-3 col-lg-3 pb">
+      <div class="form-group">
+          {{ form.cuenta_banco.label }}
+          {{ form.cuenta_banco }}
+      </div>
+  </div>
+  <div class="col-sm-4 col-md-3 col-lg-3 pb">
+      <div class="form-group">
+          {{ form.clabe.label}}
+          {{ form.clabe }}
+      </div>
+  </div>
+  <div class="col-sm-4 col-md-3 col-lg-3 pb">
+    <div class="form-group">
+    </div>
+</div>
+</div>
+
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info enabled">Guardar</button>
+            <a style="margin-bottom: 0px;" href="{% url 'prov:proveedor_list' %}" class="btn btn-info enabled">Regresar</a>
+        </div>
+    </div>
+
+</form>
+{% endblock content %}
+
+{% block js %}
+<script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    var catego = document.getElementById('id_categorias');
+    var catego_0 = document.getElementById('id_categorias_0');
+    catego.style.display = 'inline-flex';
+    // catego_0.setAttribute("required", "required");
+    function validachek() {
+        cnt=0;
+        $('input[type=checkbox]').each(function () {
+            if(this.checked){cnt++;}
+        });
+
+        if(cnt==0) {alert('Favor de indicar una categoría')}
+    }
+
+    let pai = document.getElementById("id_pais")
+    let ent = document.getElementById("id_entidad")
+    let mun = document.getElementById("id_municipio")
+
+    pai.addEventListener("change", getPaisId) 
+    ent.addEventListener("change", getEntidadId) 
+
+    function getPaisId(e)
+    {
+        let pais_id = e.target.value
+
+        const data = { id: pais_id };
+        let url = "{% url 'dom:get_entidades' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            ent.innerHTML = '<option value="" selected>------</option>'
+            for(let i = 0; i < data.length; i++){
+                ent.innerHTML +=  `<option value="${data[i]["id"]}">${data[i]["nombre"]}</option>`
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    }
+
+    function getEntidadId(e)
+    {
+        let entidad_id = e.target.value
+
+        const data = { id: entidad_id };
+        let url = "{% url 'dom:get_municipios' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            mun.innerHTML = '<option value="" selected>------</option>'
+            for(let i = 0; i < data.length; i++){
+                mun.innerHTML +=  `<option value="${data[i]["id"]}">${data[i]["nombre"]}</option>`
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    }
+
+    let select = document.getElementsByTagName("select")
+    for(let i = 0; i < select.length; i++) {
+        select[i].classList.add("form-control")
+    }
+
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block css %}
+<style>
+    .pb {
+        padding-bottom: 10px !important;
+      }
+</style>  
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="card card-default">
+        <div class="card-header">
+          <h3 class="card-title">Edición de Producto</h3>
+        </div>
+    </div>
+
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="form-group-">
+                        {{ form.nombre.label }}
+                        {{ form.nombre }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                    <div class="form-group-">
+                        {{ form.sku.label }}
+                        {{ form.sku }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                    <div class="form-group-">
+                        {{ form.upc.label}}
+                        {{ form.upc }}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                  <div class="form-group-">
+                      {{ form.cuenta_contable.label}}
+                      {{ form.cuenta_contable }}
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                  <div class="form-group-">
+                      {{ form.numero_sat.label }}
+                      {{ form.numero_sat }}
+                  </div>
+              </div>
+              <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                  <div class="form-group-">
+                      {{ form.unidad_sat.label }}
+                      {{ form.unidad_sat }}
+                  </div>
+              </div>
+              <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                  <div class="form-group-">
+                      {{ form.qrcaja.label}}
+                      {{ form.qrcaja }}
+                  </div>
+              </div>
+              <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                <div class="form-group-">
+                    {{ form.qrpalet.label}}
+                    {{ form.qrpalet }}
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                <div class="form-group-">
+                    {{ form.unidad_compra.label }}
+                    {{ form.unidad_compra }}
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                <div class="form-group-">
+                    {{ form.costo_promedio.label }}
+                    <input type="number" class="form-control" min="0" step="0.01" pattern="^\d*(\.\d{0,2})?$" value="{{ object.costo_promedio }}" />
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-3 pb">
+                <div class="form-group-">
+                    {{ form.unidad_venta.label}}
+                    {{ form.unidad_venta }}
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-3 pb">
+              <div class="form-group-">
+                  {{ form.margen.label}}
+                  <input type="number" class="form-control" min="0" step="0.01" pattern="^\d*(\.\d{0,2})?$" value="{{ object.margen }}" />
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 col-md-3 col-lg-3 pb">
+              <div class="form-group-">
+                  {{ form.categoria.label }}
+                  {{ form.categoria }}
+              </div>
+          </div>
+          <div class="col-sm-16 col-md-8 col-lg-8 pb">
+              <div class="form-group-">
+                  {{ form.comentario.label }}
+                  {{ form.comentario }}
+              </div>
+          </div>
+      </div>
+
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary enabled">Guardar</button>
+            <a style="margin-bottom: 0px;" href="{% url 'prod:producto_list' %}" class="btn btn-info enabled">Regresar</a>
+        </div>
+    </div>
+
+</form>
+{% endblock content %}

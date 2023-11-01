@@ -1,0 +1,581 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+<style>
+    .pb {
+        padding-bottom: 5px !important;
+      }
+    .form-control2 {
+    display: block;
+    width: 90%; 
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.table td {
+    padding: 0;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+
+</style>  
+{% endblock %}
+
+{% block content %}
+
+<form method="post" id="myForm">
+    {% csrf_token %}
+
+    <div class="card card-default">
+        <div class="card-header">
+          <h3 class="card-title">Generar OC a Consignación</h3>
+        </div>
+    </div>
+
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6 pb">
+                    <div class="medidaform-group">
+                        {{ form.proveedor.label }}
+                        {{ form.proveedor }}
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 pb">
+                    <div class="medidaform-group">
+                        {{ form.cliente.label }}
+                        {{ form.cliente }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="medidaform-group">
+                        {{ form.entregar_en.label }}
+                        {{ form.entregar_en }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="medidaform-group">
+                        {{ form.fecha_entrega.label }}
+                        {{ form.fecha_entrega }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="medidaform-group">
+                        {{ form.divisa.label}}
+                        {{ form.divisa }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="medidaform-group">
+                        {{ form.tipo_cambio.label}}
+                        {{ form.tipo_cambio }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6 pb">
+                    <div class="medidaform-group">
+                        {{ form.comentario_oc.label }}
+                        {{ form.comentario_oc }}
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 pb">
+                    <div class="medidaform-group">
+                        {{ form.comentario_pedido.label }}
+                        {{ form.comentario_pedido }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.embarcador.label }}
+                        {{ form.embarcador }}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3 pb">
+                    <div class="form-group">
+                        {{ form.comision.label }}
+                        {{ form.comision }}
+                    </div>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 pb">
+                    <div class="form-group">
+                        {{ form.tarimas.label }}
+                        {{ form.tarimas }}
+                    </div>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 pb">
+                    <div class="form-group">
+                        {{ form.cajas_tarimas.label }}
+                        {{ form.cajas_tarimas }}
+                    </div>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 pb">
+                    <div class="form-group">
+                        {{ form.total_cajas.label}}
+                        {{ form.total_cajas }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.flete1.label }}
+                        {{ form.flete1 }}
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.flete2.label }}
+                        {{ form.flete2 }}
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.aduana_mx.label}}
+                        {{ form.aduana_mx }}
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.sobrepeso_mx.label }}
+                        {{ form.sobrepeso_mx }}
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.aduana_us.label}}
+                        {{ form.aduana_us }}
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.sobrepeso_us.label }}
+                        {{ form.sobrepeso_us }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.logistica.label }}
+                        {{ form.logistica }}
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        {{ form.otros.label}}
+                        {{ form.otros }}
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 pb">
+                    <div class="medidaform-group">
+                        {{ form.producto.label }}
+                        {{ form.producto }}
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        <div>Agregar</div>
+                        <div class="Content">
+                            <button type="submit" class="btn btn-primary enabled">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        <div></div>
+                        <div class="Content">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-2 col-lg-2 pb">
+                    <div class="medidaform-group">
+                        <div></div>
+                        <div class="Content" style="display: flex;">
+                            <button type="button" class="btn btn-info btn-sm" onclick="actualizar()">Actualizar</button>
+                            &nbsp;&nbsp;
+                            <a class="btn btn-info btn-sm" href="{% url 'oc:occ_list' %}">Regresar</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    {{ form.tipoUpdate }}
+    {{ form.total_gasto }}
+</form>
+
+
+
+<div class="card shadow mb-4">
+    
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-hover"> 
+            <thead>
+                <tr style="height: 30px; background-color: lightblue;">
+                    <td>SKU</td>
+                    <td>Producto</td>
+                    <td>Etiqueta</td>
+                    <td>Tamaño</td>
+                    <td>P.Venta</td>
+                    <td>P.Reportar</td>
+                    <td>Cant.</td>
+                    <td>Subtotal</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>       
+            </thead>
+            <tbody>
+                {% for item in detalle %}
+                <tr>
+                    <td>{{ item.producto.sku }}</td>
+                    <td>{{ item.producto.nombre}}</td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <select name="etiqueta" id="id_etiqueta_{{ item.id }}" class="form-control" style="width: auto;">
+                                <option value="" selected>Seleccione</option>
+                                {% for eti in item.producto.etiqueta_set.all %}
+                                {% if item.etiqueta_id == eti.id %}
+                                <option value="{{ eti.id }}" selected>{{ eti.nombre }}</option>
+                                {% else %}
+                                <option value="{{ eti.id }}">{{ eti.nombre }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+
+                            <select name="medida" id="id_medida_{{ item.id }}" class="form-control" style="width: auto;">
+                                <option value="" selected>Seleccione</option>
+                                {% for med in item.producto.medida_set.all %}
+                                {% if item.medida_id == med.id %}
+                                <option value="{{ med.id }}" selected>{{ med.nombre }}</option>
+                                {% else %}
+                                <option value="{{ med.id }}">{{ med.nombre }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <input type="number" style="width: 100px;" class="form-control" id="id_precio_venta_{{ item.id }}" name="precio_venta" value="{{ item.precio_venta }}" oninput="subtotal('{{ item.id }}');" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <input type="number" style="width: 100px;" class="form-control" id="id_precio_reportar_{{ item.id }}" name="precio_reportar" value="{{ item.precio_reportar }}" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <input type="number" style="width: 100px;" class="form-control" id="id_cantidad_{{ item.id }}" name="cantidad" value="{{ item.cantidad }}" oninput ="subtotal('{{ item.id }}');" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <input type="number" style="width: 100px;" class="form-control" id="id_subtotal_{{ item.id }}" name="subtotal" value="{{ item.subtotal }}" disabled />
+                        </div>
+                    </td>
+                    <td>
+                       <i class="far fa-edit" onclick="GuardaProducto('{{ item.id }}','{{ item.orden_compra.id }}')"></i>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <i class="fas fa-trash" onclick="EliminaProducto('{{ item.id }}','{{ item.orden_compra.id }}')"></i>
+                     </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <input type="number" style="width: 100px;" class="form-control" id="id_total_cantidad" name="total_cantidad" value="{{ oc.total_cantidad }}" disabled />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <input type="number" style="width: 100px;" class="form-control" id="id_total_subtotal" name="subtotal" value="{{ oc.subtotal }}" disabled />
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+
+<script src="{% static 'js/adminlte.min.js' %}"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "paging": false,
+      "responsive": true, 
+      "lengthChange": false, 
+      "searching": false,
+      "ordering": false,
+      "info": false,
+      "autoWidth": false,
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
+
+<script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    let prov = document.getElementById("id_proveedor")
+    let prod = document.getElementById("id_producto")
+
+    prov.addEventListener("change", getProveedorId) 
+
+    function getProveedorId(e)
+    {
+        let proveedor_id = e.target.value
+
+        const data = { id: proveedor_id };
+        let url = "{% url 'prod:get_productos' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            prod.innerHTML = '<option value="" selected>------</option>'
+            for(let i = 0; i < data.length; i++){
+                prod.innerHTML +=  `<option value="${data[i]["id"]}">${data[i]["nombre"]}</option>`
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    }
+
+    const form = document.getElementById("myForm");
+    const tarimasField = form.querySelector("#id_tarimas");
+    const cajas_tarimasField = form.querySelector("#id_cajas_tarimas");
+    const total_cajasField = form.querySelector("#id_total_cajas");
+
+    tarimasField.addEventListener("input", updateTotalTarimas);
+    cajas_tarimasField.addEventListener("input", updateTotalTarimas);
+
+    function updateTotalTarimas() {
+        const tarimas = parseFloat(tarimasField.value) || 0;
+        const cajasPorTarimas = parseFloat(cajas_tarimasField.value) || 0;
+        const totalTarimas = tarimas * cajasPorTarimas;
+        total_cajasField.value = totalTarimas.toFixed(2); // Ajusta el formato como desees
+    }
+
+    function subtotal(id) {
+        const precio_ventaField = document.getElementById("id_precio_venta_"+id);
+        const cantidadField = document.getElementById("id_cantidad_"+id);
+        const subtotalField = document.getElementById("id_subtotal_"+id);
+
+        const precio_venta = parseFloat(precio_ventaField.value) || 0;
+        const cantidad = parseFloat(cantidadField.value) || 0;
+        const subtotal = precio_venta * cantidad;
+        subtotalField.value = subtotal.toFixed(2);
+    }
+
+    const tipo_cambioField = form.querySelector("#id_tipo_cambio");
+    const flete1Field = form.querySelector("#id_flete1");
+    const flete2Field = form.querySelector("#id_flete2");
+    const aduana_mxField = form.querySelector("#id_aduana_mx");
+    const sobrepeso_mxField = form.querySelector("#id_sobrepeso_mx");
+    const aduana_usField = form.querySelector("#id_aduana_us");
+    const sobrepeso_usField = form.querySelector("#id_sobrepeso_us");
+    const logisticaField = form.querySelector("#id_logistica");
+    const otrosField = form.querySelector("#id_otros");
+    const total_gastoField = form.querySelector("#id_total_gasto");
+
+    tipo_cambioField.addEventListener("input", updateTotalGasto);
+    flete1Field.addEventListener("input", updateTotalGasto);
+    flete2Field.addEventListener("input", updateTotalGasto);
+    aduana_mxField.addEventListener("input", updateTotalGasto);
+    sobrepeso_mxField.addEventListener("input", updateTotalGasto);
+    aduana_usField.addEventListener("input", updateTotalGasto);
+    sobrepeso_usField.addEventListener("input", updateTotalGasto);
+    logisticaField.addEventListener("input", updateTotalGasto);
+    otrosField.addEventListener("input", updateTotalGasto);
+
+    function updateTotalGasto() {
+        const tipo_cambio = parseFloat(tipo_cambioField.value) || 0;
+        const flete1 = parseFloat(flete1Field.value) || 0;
+        const flete2 = parseFloat(flete2Field.value) || 0;
+        const aduana_mx = parseFloat(aduana_mxField.value) || 0;
+        const sobrepeso_mx = parseFloat(sobrepeso_mxField.value) || 0;
+        var aduana_us = parseFloat(aduana_usField.value) || 0;
+        var sobrepeso_us = parseFloat(sobrepeso_usField.value) || 0;
+        const logistica = parseFloat(logisticaField.value) || 0;
+        const otros = parseFloat(otrosField.value) || 0;
+
+        aduana_us = aduana_us * tipo_cambio;
+        sobrepeso_us = sobrepeso_us * tipo_cambio;
+
+        var totalGasto = flete1 + flete2 + aduana_mx + sobrepeso_mx + aduana_us + sobrepeso_us + logistica + otros;
+
+        total_gastoField.value = totalGasto.toFixed(2); 
+    }
+
+
+    let select = document.getElementsByTagName("select")
+    for(let i = 0; i < select.length; i++) {
+        select[i].classList.add("form-control")
+    }
+
+    function GuardaProducto(id, oc_id) {
+        var etiqueta = document.getElementById("id_etiqueta_"+id);
+        var medida = document.getElementById("id_medida_"+id);
+        var precio_venta = document.getElementById("id_precio_venta_"+id);
+        var precio_reportar = document.getElementById("id_precio_reportar_"+id);
+        var cantidad = document.getElementById("id_cantidad_"+id);
+        var subtotal = document.getElementById("id_subtotal_"+id);
+
+        var total_cantidad = document.getElementById("id_total_cantidad");
+        var total_subtotal = document.getElementById("id_total_subtotal");
+
+        const data = { 
+            id: id,
+            orden_compra_id: oc_id,
+            etiquetaId: etiqueta.value,
+            medidaId: medida.value,
+            precio_ventaId: precio_venta.value,
+            precio_reportarId: precio_reportar.value,
+            cantidadId: cantidad.value,
+            subtotalId: subtotal.value
+        };
+        let url = "{% url 'oc:guarda_oc_detalle' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            total_cantidad.value = data['total_cantidad']
+            total_subtotal.value = data['subtotal']
+            // alert("Guardado")
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    }
+
+    
+    function EliminaProducto(id, oc_id) {
+        
+        var total_cantidad = document.getElementById("id_total_cantidad");
+        var total_subtotal = document.getElementById("id_total_subtotal");
+
+        const data = { 
+            id: id,
+            orden_compra_id: oc_id
+        };
+        let url = "{% url 'oc:elimina_oc_detalle' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            total_cantidad.value = data['total_cantidad']
+            total_subtotal.value = data['subtotal']
+            window.location.href = window.location.href;
+            // alert("Guardado")
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    }
+
+    
+    document.getElementById("id_tipoUpdate").value="1";
+    function actualizar(){
+        document.getElementById("id_producto").value="1";
+        document.getElementById("id_tipoUpdate").value="2";
+        document.getElementById("myForm").submit();
+    }
+</script>
+{% endblock %}

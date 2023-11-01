@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row" style="justify-content: center; align-items: center;">
+
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="card card-info">
+
+        <div class="card-header">
+          <h3 class="card-title">Edicion de Municipio</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="card-body">
+                {{ form.as_table }}
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Guardar</button>
+            </div>
+
+        </form>
+      </div>
+      <!-- /.card -->
+
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    let ur = document.getElementById("id_pais")
+    let ae = document.getElementById("id_entidad")
+
+    ur.addEventListener("change", getURId) 
+
+    function getURId(e)
+    {
+        let pais_id = e.target.value
+
+        const data = { id: pais_id };
+        let url = "{% url 'dom:get_entidades' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            ae.innerHTML = '<option value="" selected="">------</option>'
+            for(let i = 0; i < data.length; i++){
+                ae.innerHTML +=  `<option value="${data[i]["id"]}" selected="">${data[i]["nombre"]}</option>`
+            }
+
+        })
+        .catch((error) => {
+           
+            console.error('Error:', error);
+        })
+
+
+    }
+
+    let select = document.getElementsByTagName("select")
+    for(let i = 0; i < select.length; i++) {
+        select[i].classList.add("form-control")
+    }
+
+</script>
+{% endblock %}

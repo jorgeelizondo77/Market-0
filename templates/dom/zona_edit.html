@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row" style="justify-content: center; align-items: center;">
+
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="card card-info">
+
+        <div class="card-header">
+          <h3 class="card-title">Edición de Zona</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="id_nombre">Zona</label>
+                    <input type="text" class="form-control" name="nombre" id="id_nombre" value="{{ zona.nombre }}">
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Guardar</button>
+            </div>
+
+        </form>
+      </div>
+      <!-- /.card -->
+
+    </div>
+
+</div>
+
+{% endblock content %}

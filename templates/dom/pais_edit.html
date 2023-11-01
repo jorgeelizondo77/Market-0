@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row" style="justify-content: center; align-items: center;">
+
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="card card-info">
+
+        <div class="card-header">
+          <h3 class="card-title">Edición de Pais</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="id_clave">Clave</label>
+                    <input type="text" class="form-control" name="clave" id="id_clave" value="{{ pais.clave }}">
+                </div>
+                <div class="form-group">
+                    <label for="id_nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="id_nombre" value="{{ pais.nombre }}">
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Guardar</button>
+            </div>
+
+        </form>
+      </div>
+      <!-- /.card -->
+
+    </div>
+
+</div>
+
+{% endblock content %}

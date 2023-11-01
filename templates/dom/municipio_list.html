@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h3>Paises</h3>
+<p></p>
+  <form method="get">
+  
+    <div class="form-group row">
+      <label for="pais" class="col-sm-1 col-form-label">Pais</label>
+      <div class="col-sm-6">
+          <select name="pais" id="pais" class="form-control from-control-sm" onchange="this.form.submit()">
+              <option value="0"></option>
+              {% for pais in paises %}
+              <option value="{{ pais.id }}" {% if pais.id == pais_seleccionado_id %}selected{% endif %}>{{ pais.nombre  }}</option>
+              {% endfor%}
+          </select>
+      </div>
+    </div>
+
+  <div class="form-group row">
+    <label for="entidad" class="col-sm-1 col-form-label">Entidad</label>
+    <div class="col-sm-6">
+        <select name="entidad" id="entidad" class="form-control from-control-sm" onchange="this.form.submit()">
+            <option value="0"></option>
+            {% for entidad in entidades %}
+            <option value="{{ entidad.id }}" {% if entidad.id == entidad_seleccionada_id %}selected{% endif %}>{{ entidad.nombre  }}</option>
+            {% endfor%}
+        </select>
+    </div>
+  </div>
+
+  </form>
+
+<div class="card">
+    <div class="card-header">
+
+      <div class="project-actions text-right">
+        <a class="btn btn-primary btn-sm" href="{% url 'dom:municipio_new' %}">
+            <i class="fas fa-folder">
+            </i>
+            Nuevo
+        </a>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+              <th style="width: 10px">#</th>
+              <th>Clave</th>
+              <th>Nombre</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for item in municipios %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ item.clave }}</td>
+              <td>{{ item.nombre }}</td>
+              <td class="project-actions text-right">
+                  <a class="btn btn-info btn-sm" href="{% url 'dom:municipio_edit' item.id %}">
+                      <i class="fas fa-pencil-alt">
+                      </i>
+                      Editar
+                  </a>
+                  <a class="btn btn-danger btn-sm" href="{% url 'dom:municipio_delete' item.id %}">
+                    <i class="fas fa-trash">
+                    </i>
+                    Eliminar
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+<!-- AdminLTE App -->
+<script src="{% static 'js/adminlte.min.js' %}"></script>
+
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "paging": true,
+      "responsive": true, 
+      "lengthChange": false, 
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
+
+{% endblock %}

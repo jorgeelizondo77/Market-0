@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row" style="justify-content: center; align-items: center;">
+
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="card card-info">
+
+        <div class="card-header">
+          <h3 class="card-title">Edición de Usuario</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+
+        <div class="card">
+            <div class="card-body register-card-body">
+
+            <form method="POST">
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="username" placeholder="usuario" value="{{ object.username }}">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <input type="email" class="form-control" name="email" placeholder="Email" value="{{ object.email }}">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="nombres" placeholder="Nombre" value="{{ object.nombres }}">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="apellidos" placeholder="Apellidos" value="{{ object.apellidos }}">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                {{ form.genero }}
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                {{ form.group }}
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" name="password1" placeholder="Contraseña value={{ object.password1 }}">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" name="password2" placeholder="Repetir contraseña" value="{{ object.password2 }}">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                </div>
+
+                <div class="col-4">
+                  <button type="submit" class="btn btn-info btn-block">Modificar</button>
+                </div>
+
+              </div>
+
+            </form>
+      </div>
+      <!-- /.card -->
+
+    </div>
+
+</div>
+
+{% endblock content %}

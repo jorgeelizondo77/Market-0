@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   
+    <title></title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td style="width: 10%;">
+                    <img src="{{ logo }}" width="120px" height="120px" />
+                </td>
+                <td style="text-align: center;width: 80%;">
+                    <h2 style="font-family: Arial, Helvetica, sans-serif;">Comercializadora y Productora La bonita del Norte S.A. de C.V.</h2>
+                    <h4>Ave. Los Angeles # 1000 - Int. Bodega 89, Tel. (81) 8331 0802</h4>
+                    <h4>San Nicolás de los Garza, Nuevo León</h4>
+                </td>
+            </tr>
+        </table>
+    
+        <h2 style="text-align: center;width: 90%;">Orden de Compra (Consignación) No. {{ oc.id }}</h2>
+        <br>
+        <table>
+            <tr>
+                <td style="width: 120px;">Proveedor:</td>
+                <td>{{ oc.proveedor.nombre}}</td>
+            </tr>
+            <tr>
+                <td>Dirección de Entrega:</td>
+                <td>{{ oc.entregar_en.nombre}}</td>
+            </tr>
+            <tr>
+                <td>Solicitante:</td>
+                <td>{{ oc.uc.nombres }} {{ oc.uc.apellidos }}</td>
+            </tr>
+            <tr>
+                <td>F. Creación:</td>
+                <td>{{ oc.fc}}</td>
+            </tr>
+            <tr>
+                <td>F. Entrega:</td>
+                <td>{{ oc.fecha_entrega}}</td>
+            </tr>
+            <tr>
+                <td>Estatus:</td>
+                <td>{{ oc.estatus.nombre }}</td>
+            </tr>
+        </table>
+        <hr>
+        <p></p>
+
+
+        <div class="card-body p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr style="background-color: dimgray; color: white; height: 25px;">
+                  <th style="text-align: left;">SKU</th>
+                  <th style="text-align: left;">Producto</th>
+                  <th style="text-align: right;">P. Venta</th>
+                  <th style="text-align: right;">Comisión</th>
+                  <th style="text-align: right;">Gasto</th>
+                  <th style="text-align: right;">Precio</th>
+                  <th style="text-align: right;">Cantidad</th>
+                  <th style="text-align: right;">Importe</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in oc_det %}
+
+                {% if forloop.counter|divisibleby:2 == True %}
+
+                <tr style="height: 25px; background-color: lightgray;">
+                    <td style="text-align: left;">{{ item.sku }}</td>
+                    <td style="text-align: left;">{{ item.producto.nombre }}</td>
+                    <td style="text-align: right;">{{ item.precio_venta|floatformat:2 }}</td>
+                    <td style="text-align: right;">{{ item.comision }}</td>
+                    <td style="text-align: right;">{{ item.gasto }}</td>
+                    <td style="text-align: right;">{{ item.precio }}</td>
+                    <td style="text-align: right;">{{ item.cantidad }}</td>
+                    <td style="text-align: right;">{{ item.importe|floatformat:2 }}</td>
+                  </tr>
+
+                {% else %}
+
+                <tr style="height: 25px;">
+                  <td style="text-align: left;">{{ item.sku }}</td>
+                  <td style="text-align: left;">{{ item.producto.nombre }}</td>
+                  <td style="text-align: right;">{{ item.precio_venta|floatformat:2 }}</td>
+                  <td style="text-align: right;">{{ item.comision }}</td>
+                  <td style="text-align: right;">{{ item.gasto }}</td>
+                  <td style="text-align: right;">{{ item.precio }}</td>
+                  <td style="text-align: right;">{{ item.cantidad }}</td>
+                  <td style="text-align: right;">{{ item.importe|floatformat:2 }}</td>
+                </tr>
+                {% endif %}
+
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+        <br>
+        <br>
+
+        <table>
+            <tr>
+                <td style="width: 100px;">Comentarios:</td>
+                <td>{{ oc.comentario_oc }}</td>
+            </tr>
+            <tr>
+                <td>Total Cajas:</td>
+                <td>{{ oc.total_cajas|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Subtotal:</td>
+                <td>$ {{ oc.total_importe|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td>IVA:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Total:</td>
+                <td>$ {{ oc.total_importe|floatformat:2 }}</td>
+            </tr>
+        </table>
+<hr>
+Este documento es una representación impresa de orden de compra (consignación).
+
+    </div>
+</body>
+</html>
