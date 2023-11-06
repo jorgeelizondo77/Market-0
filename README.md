@@ -20,3 +20,9 @@ crear el archivo secret.json al nivel de manage.py y completar los datos
     "PASSWORD": "",
     "PORT": "5432",
 }
+
+Llenar desde el admin la tabla Orden_Compra_Estatus
+1 Pendiente
+2 Generada
+3 Cancelada
+4 En entrada
