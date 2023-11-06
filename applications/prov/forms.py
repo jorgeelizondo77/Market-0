@@ -149,9 +149,20 @@ class ProveedorForm(forms.ModelForm):
         widget = forms.Select(attrs={'class':'form-control'}), 
         required=False
     )
-    # plazo = models.PositiveIntegerField(default=0, blank=True, null=True)
-    # descuento = models.DecimalField(default=0, max_digits=12, decimal_places=2)
-    # limite_credito = models.PositiveIntegerField(default=0, blank=True, null=True)
+    plazo = forms.IntegerField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        label='Plazo',
+        initial=0, required=False
+    )
+    descuento  = forms.DecimalField(initial=0, max_digits=12, decimal_places=2,required=False,
+        widget = forms.NumberInput(attrs={'class':'form-control'}),
+        label='Descuento',
+        )
+
+    limite_credito = forms.DecimalField(initial=0, max_digits=12, decimal_places=2,required=False,
+        widget = forms.NumberInput(attrs={'class':'form-control'}),
+        label='Límite de crédito',
+        )
 
     banco = forms.ModelChoiceField(
         queryset = Banco.objects.filter(ac=True),
@@ -200,11 +211,10 @@ class ProveedorForm(forms.ModelForm):
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
-            # pass
-            # try:
-            self.fields['entidad'].queryset = self.instance.pais.entidad_set.order_by('nombre')
-            # except (ValueError, TypeError):
-                # pass
+            try:
+                self.fields['entidad'].queryset = self.instance.pais.entidad_set.order_by('nombre')
+            except (ValueError, TypeError):
+               self.fields['entidad'].queryset = Entidad.objects.none()
 
         if 'entidad' in self.data:
             try:
@@ -214,8 +224,10 @@ class ProveedorForm(forms.ModelForm):
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
-            # pass
-            self.fields['municipio'].queryset = self.instance.entidad.municipio_set.order_by('nombre')
+            try:
+                self.fields['municipio'].queryset = self.instance.entidad.municipio_set.order_by('nombre')
+            except:
+                self.fields['municipio'].queryset = Municipio.objects.none()
 
         def clean_categorias(self):
             if not self.cleaned_data['categorias']:

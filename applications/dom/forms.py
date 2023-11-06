@@ -196,7 +196,10 @@ class DomicilioForm(forms.ModelForm):
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
-            self.fields['entidad'].queryset = self.instance.pais.entidad_set.order_by('nombre')
+            try:
+                self.fields['entidad'].queryset = self.instance.pais.entidad_set.order_by('nombre')
+            except (ValueError, TypeError):
+                self.fields['entidad'].queryset = Entidad.objects.none()
 
         if 'entidad' in self.data:
             try:
@@ -206,9 +209,10 @@ class DomicilioForm(forms.ModelForm):
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
-            self.fields['municipio'].queryset = self.instance.entidad.municipio_set.order_by('nombre')
-
-            
+            try:
+                self.fields['municipio'].queryset = self.instance.entidad.municipio_set.order_by('nombre')
+            except (ValueError, TypeError):
+                self.fields['municipio'].queryset = Municipio.objects.none()
 
 
 

@@ -38,8 +38,13 @@ class Orden_CompraNew(LoginRequiredMixin, CreateView):
         return reverse_lazy('oc:occ_edit', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        estatus = Orden_Compra_Estatus.objects.get(pk=1)
-        form.instance.estatus = estatus
+        try:
+            estatus = Orden_Compra_Estatus.objects.get(pk=1)
+            form.instance.estatus = estatus
+        except:
+            estatus = 1
+            form.instance.estatus = estatus
+        
         form.instance.uc = self.request.user
         form.instance.consignacion = True
         producto = form.cleaned_data['producto']
@@ -73,8 +78,12 @@ class Orden_CompraEdit(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         pk = self.kwargs.get('pk')
-        estatus = Orden_Compra_Estatus.objects.get(pk=1)
-        form.instance.estatus = estatus
+        try:
+            estatus = Orden_Compra_Estatus.objects.get(pk=1)
+            form.instance.estatus = estatus
+        except:
+            estatus = 1
+            form.instance.estatus = estatus
         form.instance.um = self.request.user.id
         form.instance.consignacion = True
         producto = form.cleaned_data['producto']
